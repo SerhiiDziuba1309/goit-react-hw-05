@@ -1,84 +1,43 @@
-import toast, { Toaster } from 'react-hot-toast';
-import SearchBar from '../components/SearchBar/SearchBar';
-import ImageGallery from '../components/ImageGallery/ImageGallery';
-import LoadMoreBtn from '../components/LoadMoreBtn/LoadMoreBtn';
-import ErrorMessage from '../components/ErrorMessage/ErrorMessage';
-import ImageModal from '../components/ImageModal/ImageModal';
-import Loader from '../components/Loader/Loader';
+import { lazy, Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Navigation from '../components/Navigation/Navigation';
 import s from './App.module.css';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 
-const UNSPLASH_API_URL = 'https://api.unsplash.com/search/photos';
-const ACCESS_KEY = 'O4CmHlBkk719CuCc7klHPeRJhobiuP_mtC-K1hus2V0';
+const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
+const MoviesPage = lazy(() => import('../pages/MoviesPage/MoviesPage'));
+const MovieDetailsPage = lazy(() =>
+  import('../pages/MovieDetailsPage/MovieDetaisPage')
+);
+const MovieCast = lazy(() => import('../components/MovieCast/MovieCast'));
+const MovieReviews = lazy(() =>
+  import('../components/MovieReviews/MovieReviews')
+);
+const NotFoundPage = lazy(() => import('../pages/NotFoundPage/NotFoundPage'));
 
-const App = () => {
-  const [images, setImages] = useState([]);
-  const [query, setQuery] = useState('');
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [modalImage, setModalImage] = useState(null);
+const App = () => (
+  <div className={s.appContainer}>
+    <header className={s.header}>Movie Search App</header>
 
-  useEffect(() => {
-    if (!query) return;
-    setLoading(true);
-    setError(null);
+    <Navigation />
 
-    axios
-      .get(UNSPLASH_API_URL, {
-        params: {
-          query,
-          page,
-          per_page: 20,
-          client_id: ACCESS_KEY,
-        },
-      })
-      .then(response => {
-        if (response.data.results.length === 0) {
-          toast.error('No results found. Try a different keyword');
-          return;
-        }
-        setImages(prevImages => [...prevImages, ...response.data.results]);
-      })
-      .catch(() => {
-        setError('Something went wrong.Please try again later');
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [query, page]);
+    <main className={s.main}>
+      <Suspense fallback={<p>Loading...</p>}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/movies" element={<MoviesPage />} />
+          <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
+            <Route path="cast" element={<MovieCast />} />
+            <Route path="reviews" element={<MovieReviews />} />
+          </Route>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
+    </main>
 
-  const handleSearch = searchQuery => {
-    setQuery(searchQuery);
-    setImages([]);
-    setPage(1);
-  };
-
-  const loadMore = () => {
-    setPage(prevPage => prevPage + 1);
-  };
-
-  const openModal = image => {
-    setModalImage(image);
-  };
-  const closeModal = () => {
-    setModalImage(null);
-  };
-
-  return (
-    <div className={s.app}>
-      <Toaster position="top-right" />
-      <SearchBar onSubmit={handleSearch} />
-      {error && <ErrorMessage message={error} />}
-      <ImageGallery images={images} onImageClick={openModal} />
-      {loading && <Loader />}
-      {images.length > 0 && !loading && <LoadMoreBtn onClick={loadMore} />}
-      {modalImage && (
-        <ImageModal modalImage={modalImage} onClose={closeModal} />
-      )}
-    </div>
-  );
-};
+    <footer className={s.footer}>
+      © 2024 Movie Search App. All rights reserved.
+    </footer>
+  </div>
+);
 
 export default App;

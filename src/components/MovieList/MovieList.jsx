@@ -1,16 +1,24 @@
 import React from 'react';
-import s from './ImageCard.module.css';
+import { Link, useLocation } from 'react-router-dom';
+import s from './MovieList.module.css';
 
-const ImageCard = ({ image }) => {
+const MovieList = ({ movies }) => {
+  const location = useLocation();
   return (
-    <div className={s.card}>
-      <img
-        className={s.img}
-        src={image.urls.small}
-        alt={image.alt_description}
-      />
-    </div>
+    <ul className={s.list}>
+      {movies.map(movie => (
+        <li className={s.item} key={movie.id}>
+          <Link
+            className={s.link}
+            to={`/movies/${movie.id}`}
+            state={{ from: location }}
+          >
+            {movie.title || movie.name}
+          </Link>
+        </li>
+      ))}
+    </ul>
   );
 };
 
-export default ImageCard;
+export default MovieList;

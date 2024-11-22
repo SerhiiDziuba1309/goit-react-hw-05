@@ -1,6 +1,31 @@
-.app {
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.header {
+  background-color: #343a40;
+  padding: 10px 20px;
+  color: white;
+  text-align: center;
+  font-size: 24px;
+}
+
+.main {
+  flex: 1;
+  padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+}
+
+.footer {
+  background-color: #343a40;
+  color: white;
   text-align: center;
+  padding: 10px;
+  font-size: 14px;
 }

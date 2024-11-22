@@ -1,5 +1,15 @@
-.message {
-  color: red;
-  font-size: 18px;
-  margin-top: 20px;
+.nav {
+  background-color: #343a40;
+  padding: 10px;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+  margin-right: 15px;
+}
+
+.linkActive {
+  font-weight: bold;
+  text-decoration: underline;
 }

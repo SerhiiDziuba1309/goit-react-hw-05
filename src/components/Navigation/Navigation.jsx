@@ -1,8 +1,22 @@
-import React from 'react';
-import s from './ErrorMessage.module.css';
+import { NavLink } from 'react-router-dom';
+import s from './Navigation.module.css';
 
-const ErrorMessage = ({ message }) => {
-  return <p className={s.message}>{message}</p>;
-};
+const Navigation = () => (
+  <nav className={s.nav}>
+    <NavLink
+      to="/"
+      className={({ isActive }) => (isActive ? s.linkActive : s.link)}
+      end
+    >
+      Home
+    </NavLink>
+    <NavLink
+      to="/movies"
+      className={({ isActive }) => (isActive ? s.linkActive : s.link)}
+    >
+      Movies
+    </NavLink>
+  </nav>
+);
 
-export default ErrorMessage;
+export default Navigation;

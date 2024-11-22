@@ -1,0 +1,45 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.backButton {
+  padding: 10px 15px;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.backButton:hover {
+  background-color: #0056b3;
+}
+
+.image {
+  max-width: 300px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.nav {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.linkActive {
+  font-weight: bold;
+  text-decoration: underline;
+}
