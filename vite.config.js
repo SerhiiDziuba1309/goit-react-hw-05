@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   base: '/goit-react-hw-05/',
   build: {
-    outDir: 'build',
+    outDir: 'dist',
     rollupOptions: {
       input: {
         main: './index.html',
