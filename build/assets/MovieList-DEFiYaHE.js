@@ -1,0 +1,1 @@
+import{u as e,j as t,L as a}from"./404-DoZ5PpVw.js";const o="_list_7yx3n_1",c="_item_7yx3n_13",m="_link_7yx3n_21",i={list:o,item:c,link:m},x=({movies:n})=>{const l=e();return t.jsx("ul",{className:i.list,children:n.map(s=>t.jsx("li",{className:i.item,children:t.jsx(a,{className:i.link,to:`/movies/${s.id}`,state:{from:l},children:s.title||s.name})},s.id))})};export{x as M};
