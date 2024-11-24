@@ -1,4 +1,4 @@
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, useRef, Suspense } from 'react';
 import {
   useParams,
   Link,
@@ -17,7 +17,9 @@ const MovieDetailsPage = () => {
   const [movie, setMovie] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const backLink = location.state?.from || '/movies';
+
+  const backLinkRef = useRef(location.state?.from || '/movies');
+
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
@@ -41,17 +43,28 @@ const MovieDetailsPage = () => {
 
   return (
     <div className={s.container}>
-      <button onClick={() => navigate(backLink)} className={s.backButton}>
+      <button
+        onClick={() => navigate(backLinkRef.current)}
+        className={s.backButton}
+      >
         Go back
       </button>
 
-      <h1>{movie.title || movie.name}</h1>
-      <p>{movie.overview}</p>
-      <img
-        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-        alt={movie.title}
-        className={s.image}
-      />
+      <div className={s.details}>
+        <img
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          alt={movie.title}
+          className={s.image}
+        />
+        <div>
+          <h1>{movie.title || movie.name}</h1>
+          <p>{movie.overview}</p>
+          <p>
+            <strong>Genres:</strong>{' '}
+            {movie.genres.map(genre => genre.name).join(', ')}
+          </p>
+        </div>
+      </div>
 
       <nav className={s.nav}>
         <Link to="cast" className={s.link}>
